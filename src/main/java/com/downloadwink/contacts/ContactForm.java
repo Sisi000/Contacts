@@ -4,10 +4,10 @@ import net.proteanit.sql.DbUtils;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
+import javax.swing.table.TableModel;
 import javax.swing.text.StyleContext;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -31,7 +31,7 @@ public class ContactForm {
     public static void main(String[] args) throws SQLException {
         JFrame frame = new JFrame("ContactForm");
         frame.setContentPane(new ContactForm().Main);
-        frame.setSize(800, 500);
+        frame.setSize(800, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //        frame.pack();
         frame.setVisible(true);
@@ -132,7 +132,9 @@ public class ContactForm {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String id = textField1.getText();
+                int i = table_1.getSelectedRow();
+                String id = table_1.getValueAt(i, 0).toString();
+
 
                 try {
                     pst = getConnection().prepareStatement("delete from contacts where id = ?");
@@ -183,6 +185,18 @@ public class ContactForm {
             }
         });
 
+        table_1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                int i = table_1.getSelectedRow();
+                TableModel model = table_1.getModel();
+                textField1.setText(model.getValueAt(i, 0).toString());
+                txtFirstName.setText(model.getValueAt(i, 1).toString());
+                txtLastName.setText(model.getValueAt(i, 2).toString());
+                txtPhoneNumber.setText(model.getValueAt(i, 3).toString());
+            }
+        });
     }
 
 
@@ -206,13 +220,13 @@ public class ContactForm {
         final JPanel spacer1 = new JPanel();
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
-        gbc.gridx = 1;
+        gbc.gridx = 2;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         Main.add(spacer1, gbc);
         final JPanel spacer2 = new JPanel();
         gbc = new GridBagConstraints();
-        gbc.gridx = 0;
+        gbc.gridx = 1;
         gbc.gridy = 4;
         gbc.fill = GridBagConstraints.VERTICAL;
         Main.add(spacer2, gbc);
@@ -221,13 +235,13 @@ public class ContactForm {
         if (label1Font != null) label1.setFont(label1Font);
         label1.setText("First Name");
         gbc = new GridBagConstraints();
-        gbc.gridx = 0;
+        gbc.gridx = 1;
         gbc.gridy = 5;
         gbc.anchor = GridBagConstraints.EAST;
         Main.add(label1, gbc);
         txtFirstName = new JTextField();
         gbc = new GridBagConstraints();
-        gbc.gridx = 2;
+        gbc.gridx = 3;
         gbc.gridy = 5;
         gbc.gridwidth = 5;
         gbc.anchor = GridBagConstraints.WEST;
@@ -236,7 +250,7 @@ public class ContactForm {
         Main.add(txtFirstName, gbc);
         txtLastName = new JTextField();
         gbc = new GridBagConstraints();
-        gbc.gridx = 2;
+        gbc.gridx = 3;
         gbc.gridy = 7;
         gbc.gridwidth = 5;
         gbc.anchor = GridBagConstraints.WEST;
@@ -244,7 +258,7 @@ public class ContactForm {
         Main.add(txtLastName, gbc);
         txtPhoneNumber = new JTextField();
         gbc = new GridBagConstraints();
-        gbc.gridx = 2;
+        gbc.gridx = 3;
         gbc.gridy = 9;
         gbc.gridwidth = 5;
         gbc.anchor = GridBagConstraints.WEST;
@@ -253,21 +267,21 @@ public class ContactForm {
         final JLabel label2 = new JLabel();
         label2.setText("Last Name");
         gbc = new GridBagConstraints();
-        gbc.gridx = 0;
+        gbc.gridx = 1;
         gbc.gridy = 7;
         gbc.anchor = GridBagConstraints.EAST;
         Main.add(label2, gbc);
         final JLabel label3 = new JLabel();
         label3.setText("Phone Number");
         gbc = new GridBagConstraints();
-        gbc.gridx = 0;
+        gbc.gridx = 1;
         gbc.gridy = 9;
         gbc.anchor = GridBagConstraints.EAST;
         Main.add(label3, gbc);
         final JScrollPane scrollPane1 = new JScrollPane();
         scrollPane1.setEnabled(true);
         gbc = new GridBagConstraints();
-        gbc.gridx = 8;
+        gbc.gridx = 9;
         gbc.gridy = 3;
         gbc.gridheight = 9;
         gbc.fill = GridBagConstraints.BOTH;
@@ -277,7 +291,7 @@ public class ContactForm {
         scrollPane1.setViewportView(table_1);
         textField1 = new JTextField();
         gbc = new GridBagConstraints();
-        gbc.gridx = 8;
+        gbc.gridx = 9;
         gbc.gridy = 13;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -285,77 +299,77 @@ public class ContactForm {
         Main.add(textField1, gbc);
         final JPanel spacer3 = new JPanel();
         gbc = new GridBagConstraints();
-        gbc.gridx = 7;
+        gbc.gridx = 8;
         gbc.gridy = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         Main.add(spacer3, gbc);
         final JPanel spacer4 = new JPanel();
         gbc = new GridBagConstraints();
-        gbc.gridx = 6;
+        gbc.gridx = 7;
         gbc.gridy = 6;
         gbc.fill = GridBagConstraints.VERTICAL;
         Main.add(spacer4, gbc);
         final JPanel spacer5 = new JPanel();
         gbc = new GridBagConstraints();
-        gbc.gridx = 6;
+        gbc.gridx = 7;
         gbc.gridy = 8;
         gbc.fill = GridBagConstraints.VERTICAL;
         Main.add(spacer5, gbc);
         final JPanel spacer6 = new JPanel();
         gbc = new GridBagConstraints();
-        gbc.gridx = 6;
+        gbc.gridx = 7;
         gbc.gridy = 10;
         gbc.fill = GridBagConstraints.VERTICAL;
         Main.add(spacer6, gbc);
         final JPanel spacer7 = new JPanel();
         gbc = new GridBagConstraints();
-        gbc.gridx = 6;
+        gbc.gridx = 7;
         gbc.gridy = 12;
         gbc.fill = GridBagConstraints.VERTICAL;
         Main.add(spacer7, gbc);
         saveButton = new JButton();
         saveButton.setText("Save");
         gbc = new GridBagConstraints();
-        gbc.gridx = 2;
+        gbc.gridx = 3;
         gbc.gridy = 11;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         Main.add(saveButton, gbc);
         updateButton = new JButton();
         updateButton.setText("Update");
         gbc = new GridBagConstraints();
-        gbc.gridx = 4;
+        gbc.gridx = 5;
         gbc.gridy = 11;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         Main.add(updateButton, gbc);
         deleteButton = new JButton();
         deleteButton.setText("Delete");
         gbc = new GridBagConstraints();
-        gbc.gridx = 6;
+        gbc.gridx = 7;
         gbc.gridy = 11;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         Main.add(deleteButton, gbc);
         searchButton = new JButton();
         searchButton.setText("Search");
         gbc = new GridBagConstraints();
-        gbc.gridx = 6;
+        gbc.gridx = 7;
         gbc.gridy = 13;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         Main.add(searchButton, gbc);
         final JPanel spacer8 = new JPanel();
         gbc = new GridBagConstraints();
-        gbc.gridx = 3;
+        gbc.gridx = 4;
         gbc.gridy = 11;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         Main.add(spacer8, gbc);
         final JPanel spacer9 = new JPanel();
         gbc = new GridBagConstraints();
-        gbc.gridx = 5;
+        gbc.gridx = 6;
         gbc.gridy = 11;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         Main.add(spacer9, gbc);
         final JPanel spacer10 = new JPanel();
         gbc = new GridBagConstraints();
-        gbc.gridx = 8;
+        gbc.gridx = 9;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.VERTICAL;
         gbc.ipady = 20;
@@ -365,11 +379,17 @@ public class ContactForm {
         if (label4Font != null) label4.setFont(label4Font);
         label4.setText("Contacts");
         gbc = new GridBagConstraints();
-        gbc.gridx = 7;
+        gbc.gridx = 8;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.WEST;
         Main.add(label4, gbc);
+        final JPanel spacer11 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        Main.add(spacer11, gbc);
     }
 
     /**
