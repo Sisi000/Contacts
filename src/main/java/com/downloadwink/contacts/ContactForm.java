@@ -148,6 +148,8 @@ public class ContactForm {
                     txtLastName.setText("");
                     txtPhoneNumber.setText("");
                     txtFirstName.requestFocus();
+                    saveButton.setVisible(true);
+                    addNewButton.setVisible(false);
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }
@@ -166,20 +168,8 @@ public class ContactForm {
                     pst.setString(1, firstNameSearch);
                     ResultSet rs = pst.executeQuery();
                     table_1.setModel(DbUtils.resultSetToTableModel(rs));
-//                    if (rs.next()) {
-//                        String firstName = rs.getString(2);
-//                        String lastName = rs.getString(3);
-//                        String phoneNumber = rs.getString(4);
-//
-//                        txtFirstName.setText(firstName);
-//                        txtLastName.setText(lastName);
-//                        txtPhoneNumber.setText(phoneNumber);
-//                    } else {
-//                        txtFirstName.setText("");
-//                        txtLastName.setText("");
-//                        txtPhoneNumber.setText("");
-//                        JOptionPane.showMessageDialog(null, "Record Not Found");
-//                    }
+                    addNewButton.setVisible(true);
+
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }
@@ -192,6 +182,10 @@ public class ContactForm {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                addNewButton.setVisible(true);
+                updateButton.setVisible(true);
+                deleteButton.setVisible(true);
+                saveButton.setVisible(false);
                 int i = table_1.getSelectedRow();
                 TableModel model = table_1.getModel();
                 textField1.setText(model.getValueAt(i, 0).toString());
@@ -347,6 +341,7 @@ public class ContactForm {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         Main.add(saveButton, gbc);
         updateButton = new JButton();
+        updateButton.setEnabled(true);
         updateButton.setText("Update");
         gbc = new GridBagConstraints();
         gbc.gridx = 5;
@@ -354,6 +349,7 @@ public class ContactForm {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         Main.add(updateButton, gbc);
         deleteButton = new JButton();
+        deleteButton.setEnabled(true);
         deleteButton.setText("Delete");
         gbc = new GridBagConstraints();
         gbc.gridx = 7;
@@ -403,7 +399,9 @@ public class ContactForm {
         gbc.fill = GridBagConstraints.VERTICAL;
         Main.add(spacer11, gbc);
         addNewButton = new JButton();
+        addNewButton.setEnabled(true);
         addNewButton.setText("Add new");
+        addNewButton.setVisible(false);
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
         gbc.gridy = 11;

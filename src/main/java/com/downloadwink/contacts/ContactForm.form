@@ -144,6 +144,7 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
+          <enabled value="true"/>
           <text value="Update"/>
         </properties>
       </component>
@@ -153,6 +154,7 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
+          <enabled value="true"/>
           <text value="Delete"/>
         </properties>
       </component>
@@ -205,7 +207,9 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
+          <enabled value="true"/>
           <text value="Add new"/>
+          <visible value="false"/>
         </properties>
       </component>
     </children>
