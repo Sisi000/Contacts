@@ -158,10 +158,10 @@ public class ContactForm {
             public void actionPerformed(ActionEvent e) {
                 try {
 
-                    String id = textField1.getText();
+                    String firstNameSearch = textField1.getText();
 
-                    pst = getConnection().prepareStatement("select * from contacts where id = ?");
-                    pst.setString(1, id);
+                    pst = getConnection().prepareStatement("select * from contacts where firstName = ?");
+                    pst.setString(1, firstNameSearch);
                     ResultSet rs = pst.executeQuery();
                     if (rs.next()) {
                         String firstName = rs.getString(2);

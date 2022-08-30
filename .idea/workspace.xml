@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a2cf4317-b2ec-47b2-8fe9-beaa468dc456" name="Changes" comment="First commit">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/downloadwink/contacts/ContactForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/downloadwink/contacts/ContactForm.form" afterDir="false" />
+    <list default="true" id="a2cf4317-b2ec-47b2-8fe9-beaa468dc456" name="Changes" comment="Added mouse listener">
       <change beforePath="$PROJECT_DIR$/src/main/java/com/downloadwink/contacts/ContactForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/downloadwink/contacts/ContactForm.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -93,7 +91,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661879371342</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added mouse listener">
+      <created>1661881614495</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1661881614495</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -110,7 +115,8 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="First commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="First commit" />
+    <MESSAGE value="Added mouse listener" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added mouse listener" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
