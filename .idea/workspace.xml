@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a2cf4317-b2ec-47b2-8fe9-beaa468dc456" name="Changes" comment="Added changes">
+    <list default="true" id="a2cf4317-b2ec-47b2-8fe9-beaa468dc456" name="Changes" comment="Changed form">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/downloadwink/contacts/ContactForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/downloadwink/contacts/ContactForm.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/downloadwink/contacts/ContactForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/downloadwink/contacts/ContactForm.java" afterDir="false" />
@@ -43,7 +43,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "last_opened_file_path": "D:/coding/myprojects/javaprojects/siri/contact",
-    "project.structure.last.edited": "Global Libraries",
+    "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "project.propGUI"
@@ -121,7 +121,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661888629925</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Changed form">
+      <created>1661893399170</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1661893399170</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -140,7 +147,8 @@
     <MESSAGE value="First commit" />
     <MESSAGE value="Added mouse listener" />
     <MESSAGE value="Added changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added changes" />
+    <MESSAGE value="Changed form" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed form" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

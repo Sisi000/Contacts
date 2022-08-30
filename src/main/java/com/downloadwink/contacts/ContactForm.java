@@ -28,6 +28,9 @@ public class ContactForm {
 
     private JButton addNewButton;
     private JTextField textField1;
+    private JPanel enterPanel;
+    private JButton clearAllButton;
+    private JButton resetButton;
 
     private JScrollPane table1;
 
@@ -65,6 +68,20 @@ public class ContactForm {
         getConnection();
         table_load();
 
+        //Add new button
+        addNewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enterPanel.setVisible(true);
+                deleteButton.setVisible(false);
+                updateButton.setVisible(false);
+                txtFirstName.setText("");
+                txtLastName.setText("");
+                txtPhoneNumber.setText("");
+                txtFirstName.requestFocus();
+            }
+        });
+
         //Save button
         saveButton.addActionListener(new ActionListener() {
             @Override
@@ -90,7 +107,10 @@ public class ContactForm {
                         txtFirstName.setText("");
                         txtLastName.setText("");
                         txtPhoneNumber.setText("");
-                        txtFirstName.requestFocus();
+                        enterPanel.setVisible(false);
+                        saveButton.setVisible(false);
+                        clearAllButton.setVisible(false);
+                        addNewButton.setVisible(true);
                     } catch (SQLException e1) {
                         e1.printStackTrace();
                     }
@@ -149,8 +169,10 @@ public class ContactForm {
                     txtLastName.setText("");
                     txtPhoneNumber.setText("");
                     txtFirstName.requestFocus();
-                    saveButton.setVisible(true);
-                    addNewButton.setVisible(false);
+                    saveButton.setVisible(false);
+                    addNewButton.setVisible(true);
+                    deleteButton.setVisible(false);
+                    updateButton.setVisible(false);
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }
@@ -164,11 +186,16 @@ public class ContactForm {
                 try {
 
                     String firstNameSearch = textField1.getText();
+                    String lastNameSearch = textField1.getText();
+                    String phoneNumberSearch = textField1.getText();
 
-                    pst = getConnection().prepareStatement("select * from contacts where firstName = ?");
+                    pst = getConnection().prepareStatement("select * from contacts where firstName = ? || lastName = ? || phoneNumber = ?");
                     pst.setString(1, firstNameSearch);
+                    pst.setString(2, lastNameSearch);
+                    pst.setString(3, phoneNumberSearch);
                     ResultSet rs = pst.executeQuery();
                     table_1.setModel(DbUtils.resultSetToTableModel(rs));
+
                     addNewButton.setVisible(true);
 
                 } catch (SQLException e1) {
@@ -183,25 +210,62 @@ public class ContactForm {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                enterPanel.setVisible(true);
                 addNewButton.setVisible(true);
                 updateButton.setVisible(true);
                 deleteButton.setVisible(true);
                 saveButton.setVisible(false);
                 int i = table_1.getSelectedRow();
                 TableModel model = table_1.getModel();
-                textField1.setText(model.getValueAt(i, 0).toString());
+//                textField1.setText(model.getValueAt(i, 1).toString() + model.getValueAt(i, 2).toString() + model.getValueAt(i, 3).toString());
                 txtFirstName.setText(model.getValueAt(i, 1).toString());
                 txtLastName.setText(model.getValueAt(i, 2).toString());
                 txtPhoneNumber.setText(model.getValueAt(i, 3).toString());
             }
         });
-        addNewButton.addActionListener(new ActionListener() {
+
+        clearAllButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 txtFirstName.setText("");
                 txtLastName.setText("");
                 txtPhoneNumber.setText("");
                 txtFirstName.requestFocus();
+            }
+        });
+
+
+        KeyAdapter listener = new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                clearAllButton.setVisible(true);
+                saveButton.setVisible(true);
+                addNewButton.setVisible(false);
+            }
+        };
+        txtFirstName.addKeyListener(listener);
+        txtLastName.addKeyListener(listener);
+        txtPhoneNumber.addKeyListener(listener);
+        resetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    table_load();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+                txtFirstName.setText("");
+                txtLastName.setText("");
+                txtPhoneNumber.setText("");
+                textField1.setText("");
+                txtFirstName.requestFocus();
+                enterPanel.setVisible(false);
+                addNewButton.setVisible(true);
+                updateButton.setVisible(false);
+                deleteButton.setVisible(false);
+                saveButton.setVisible(false);
+                clearAllButton.setVisible(false);
             }
         });
     }
@@ -233,11 +297,12 @@ public class ContactForm {
         scrollPane1.setMaximumSize(new Dimension(32767, 32767));
         scrollPane1.setMinimumSize(new Dimension(200, 21));
         scrollPane1.setPreferredSize(new Dimension(100, 328));
+        scrollPane1.setVisible(true);
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 9;
-        gbc.gridwidth = 19;
+        gbc.gridwidth = 21;
         gbc.gridheight = 2;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.ipadx = 40;
@@ -245,42 +310,43 @@ public class ContactForm {
         table_1 = new JTable();
         table_1.setMinimumSize(new Dimension(30, 50));
         scrollPane1.setViewportView(table_1);
-        final JPanel panel1 = new JPanel();
-        panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(6, 2, new Insets(5, 5, 5, 5), -1, -1));
-        panel1.setMaximumSize(new Dimension(400, 2147483647));
-        panel1.setMinimumSize(new Dimension(400, 50));
+        enterPanel = new JPanel();
+        enterPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(6, 2, new Insets(5, 5, 5, 5), -1, -1));
+        enterPanel.setMaximumSize(new Dimension(400, 2147483647));
+        enterPanel.setMinimumSize(new Dimension(400, 50));
+        enterPanel.setVisible(false);
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 2;
-        gbc.gridwidth = 13;
+        gbc.gridwidth = 15;
         gbc.fill = GridBagConstraints.BOTH;
-        Main.add(panel1, gbc);
-        panel1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
+        Main.add(enterPanel, gbc);
+        enterPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         txtFirstName = new JTextField();
-        panel1.add(txtFirstName, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        enterPanel.add(txtFirstName, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         txtLastName = new JTextField();
         txtLastName.setHorizontalAlignment(10);
-        panel1.add(txtLastName, new com.intellij.uiDesigner.core.GridConstraints(2, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        enterPanel.add(txtLastName, new com.intellij.uiDesigner.core.GridConstraints(2, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         txtPhoneNumber = new JTextField();
         txtPhoneNumber.setEditable(true);
-        panel1.add(txtPhoneNumber, new com.intellij.uiDesigner.core.GridConstraints(4, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        enterPanel.add(txtPhoneNumber, new com.intellij.uiDesigner.core.GridConstraints(4, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label1 = new JLabel();
         Font label1Font = this.$$$getFont$$$(null, -1, -1, label1.getFont());
         if (label1Font != null) label1.setFont(label1Font);
         label1.setText("First Name");
-        panel1.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        enterPanel.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label2 = new JLabel();
         label2.setText("Last Name");
-        panel1.add(label2, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        enterPanel.add(label2, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label3 = new JLabel();
         label3.setText("Phone Number");
-        panel1.add(label3, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        enterPanel.add(label3, new com.intellij.uiDesigner.core.GridConstraints(4, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
-        panel1.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        enterPanel.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final com.intellij.uiDesigner.core.Spacer spacer2 = new com.intellij.uiDesigner.core.Spacer();
-        panel1.add(spacer2, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        enterPanel.add(spacer2, new com.intellij.uiDesigner.core.GridConstraints(3, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final com.intellij.uiDesigner.core.Spacer spacer3 = new com.intellij.uiDesigner.core.Spacer();
-        panel1.add(spacer3, new com.intellij.uiDesigner.core.GridConstraints(5, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        enterPanel.add(spacer3, new com.intellij.uiDesigner.core.GridConstraints(5, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JPanel spacer4 = new JPanel();
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
@@ -293,69 +359,55 @@ public class ContactForm {
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 7;
-        gbc.gridwidth = 10;
+        gbc.gridwidth = 12;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         Main.add(textField1, gbc);
         saveButton = new JButton();
         saveButton.setText("Save");
+        saveButton.setVisible(false);
         gbc = new GridBagConstraints();
-        gbc.gridx = 13;
+        gbc.gridx = 15;
         gbc.gridy = 5;
         Main.add(saveButton, gbc);
         searchButton = new JButton();
         searchButton.setText("Search");
         gbc = new GridBagConstraints();
-        gbc.gridx = 13;
+        gbc.gridx = 15;
         gbc.gridy = 7;
         Main.add(searchButton, gbc);
         final JPanel spacer5 = new JPanel();
         gbc = new GridBagConstraints();
-        gbc.gridx = 7;
+        gbc.gridx = 8;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.VERTICAL;
         gbc.ipady = 30;
         Main.add(spacer5, gbc);
-        final JLabel label4 = new JLabel();
-        Font label4Font = this.$$$getFont$$$(null, -1, 22, label4.getFont());
-        if (label4Font != null) label4.setFont(label4Font);
-        label4.setText("Contacts");
-        gbc = new GridBagConstraints();
-        gbc.gridx = 9;
-        gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.WEST;
-        Main.add(label4, gbc);
         final JPanel spacer6 = new JPanel();
         gbc = new GridBagConstraints();
-        gbc.gridx = 9;
+        gbc.gridx = 11;
         gbc.gridy = 4;
         gbc.fill = GridBagConstraints.VERTICAL;
         Main.add(spacer6, gbc);
         updateButton = new JButton();
         updateButton.setEnabled(true);
         updateButton.setText("Update");
+        updateButton.setVisible(false);
         gbc = new GridBagConstraints();
-        gbc.gridx = 11;
+        gbc.gridx = 13;
         gbc.gridy = 5;
         Main.add(updateButton, gbc);
         deleteButton = new JButton();
         deleteButton.setEnabled(true);
         deleteButton.setText("Delete");
-        gbc = new GridBagConstraints();
-        gbc.gridx = 9;
-        gbc.gridy = 5;
-        Main.add(deleteButton, gbc);
-        addNewButton = new JButton();
-        addNewButton.setEnabled(true);
-        addNewButton.setText("Add new");
-        addNewButton.setVisible(true);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 7;
-        gbc.gridy = 5;
-        Main.add(addNewButton, gbc);
-        final JPanel spacer7 = new JPanel();
+        deleteButton.setVisible(false);
         gbc = new GridBagConstraints();
         gbc.gridx = 11;
+        gbc.gridy = 5;
+        Main.add(deleteButton, gbc);
+        final JPanel spacer7 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 13;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.VERTICAL;
         Main.add(spacer7, gbc);
@@ -371,6 +423,43 @@ public class ContactForm {
         gbc.gridy = 8;
         gbc.fill = GridBagConstraints.VERTICAL;
         Main.add(spacer9, gbc);
+        addNewButton = new JButton();
+        addNewButton.setEnabled(true);
+        addNewButton.setText("Add new");
+        addNewButton.setVisible(true);
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 5;
+        Main.add(addNewButton, gbc);
+        clearAllButton = new JButton();
+        clearAllButton.setText("Clear All");
+        clearAllButton.setVisible(false);
+        gbc = new GridBagConstraints();
+        gbc.gridx = 4;
+        gbc.gridy = 5;
+        Main.add(clearAllButton, gbc);
+        final JPanel spacer10 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 3;
+        gbc.gridy = 5;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        Main.add(spacer10, gbc);
+        final JLabel label4 = new JLabel();
+        Font label4Font = this.$$$getFont$$$(null, -1, 22, label4.getFont());
+        if (label4Font != null) label4.setFont(label4Font);
+        label4.setText("Contacts");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 4;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.WEST;
+        Main.add(label4, gbc);
+        resetButton = new JButton();
+        resetButton.setText("Reset");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 17;
+        gbc.gridy = 7;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        Main.add(resetButton, gbc);
     }
 
     /**
