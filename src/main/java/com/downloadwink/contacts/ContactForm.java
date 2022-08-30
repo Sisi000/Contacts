@@ -24,16 +24,18 @@ public class ContactForm {
     private JButton deleteButton;
     private JButton updateButton;
     private JButton searchButton;
+
+    private JButton addNewButton;
     private JTextField textField1;
 
     private JScrollPane table1;
 
+
     public static void main(String[] args) throws SQLException {
-        JFrame frame = new JFrame("ContactForm");
+        JFrame frame = new JFrame("Contact Form");
         frame.setContentPane(new ContactForm().Main);
         frame.setSize(800, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.pack();
         frame.setVisible(true);
     }
 
@@ -163,20 +165,21 @@ public class ContactForm {
                     pst = getConnection().prepareStatement("select * from contacts where firstName = ?");
                     pst.setString(1, firstNameSearch);
                     ResultSet rs = pst.executeQuery();
-                    if (rs.next()) {
-                        String firstName = rs.getString(2);
-                        String lastName = rs.getString(3);
-                        String phoneNumber = rs.getString(4);
-
-                        txtFirstName.setText(firstName);
-                        txtLastName.setText(lastName);
-                        txtPhoneNumber.setText(phoneNumber);
-                    } else {
-                        txtFirstName.setText("");
-                        txtLastName.setText("");
-                        txtPhoneNumber.setText("");
-                        JOptionPane.showMessageDialog(null, "Record Not Found");
-                    }
+                    table_1.setModel(DbUtils.resultSetToTableModel(rs));
+//                    if (rs.next()) {
+//                        String firstName = rs.getString(2);
+//                        String lastName = rs.getString(3);
+//                        String phoneNumber = rs.getString(4);
+//
+//                        txtFirstName.setText(firstName);
+//                        txtLastName.setText(lastName);
+//                        txtPhoneNumber.setText(phoneNumber);
+//                    } else {
+//                        txtFirstName.setText("");
+//                        txtLastName.setText("");
+//                        txtPhoneNumber.setText("");
+//                        JOptionPane.showMessageDialog(null, "Record Not Found");
+//                    }
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }
@@ -195,6 +198,15 @@ public class ContactForm {
                 txtFirstName.setText(model.getValueAt(i, 1).toString());
                 txtLastName.setText(model.getValueAt(i, 2).toString());
                 txtPhoneNumber.setText(model.getValueAt(i, 3).toString());
+            }
+        });
+        addNewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtFirstName.setText("");
+                txtLastName.setText("");
+                txtPhoneNumber.setText("");
+                txtFirstName.requestFocus();
             }
         });
     }
@@ -390,6 +402,13 @@ public class ContactForm {
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.VERTICAL;
         Main.add(spacer11, gbc);
+        addNewButton = new JButton();
+        addNewButton.setText("Add new");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 11;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        Main.add(addNewButton, gbc);
     }
 
     /**
@@ -420,6 +439,7 @@ public class ContactForm {
     public JComponent $$$getRootComponent$$$() {
         return Main;
     }
+
 
 }
 
