@@ -5,9 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2cf4317-b2ec-47b2-8fe9-beaa468dc456" name="Changes" comment="Changes">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/downloadwink/contacts/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/controller/ContactFormController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Contact.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/ContactHome.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/DbConnection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/downloadwink/contacts/ContactForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/downloadwink/contacts/ContactForm.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/downloadwink/contacts/ContactForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/downloadwink/contacts/ContactForm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/downloadwink/contacts/ContactForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ContactForm.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/downloadwink/contacts/ContactForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ContactForm.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,14 +47,32 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "D:/coding/myprojects/javaprojects/siri/contact",
-    "project.structure.last.edited": "SDKs",
+    "last_opened_file_path": "C:/Users/sivan/Downloads/forms_rt.jar/forms_rt.jar",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "project.propGUI"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.ContactForm">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\coding\myprojects\javaprojects\Contacts\src\main\java\view" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.App">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.downloadwink.contacts.App" />
+      <module name="Contacts" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.downloadwink.contacts.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ContactForm" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.downloadwink.contacts.ContactForm" />
       <module name="Contacts" />
@@ -72,6 +95,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.App" />
         <item itemvalue="Application.ContactForm" />
         <item itemvalue="Application.Contacts" />
       </list>
