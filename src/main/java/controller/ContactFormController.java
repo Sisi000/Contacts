@@ -19,6 +19,7 @@ public class ContactFormController {
 
         JButton addNewButton = view.getAddNewButton();
         addNewButton.addActionListener(e -> {
+//            view.getAddNewButton().setText("Save");
             view.getEnterPanel().setVisible(true);
                 view.getDeleteButton().setVisible(false);
                 view.getUpdateButton().setVisible(false);

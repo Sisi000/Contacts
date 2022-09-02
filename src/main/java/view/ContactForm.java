@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.*;
@@ -16,6 +17,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class ContactForm {
@@ -48,12 +50,26 @@ public class ContactForm {
         return connect;
     }
 
+
     void table_load() throws SQLException {
 
         try {
             pst = getConnection().prepareStatement("select * from contacts");
             ResultSet rs = pst.executeQuery();
             table_1.setModel(DbUtils.resultSetToTableModel(rs));
+            table_1.setAutoCreateRowSorter(true);
+            table_1.getRowSorter().toggleSortOrder(0);
+            table_1.getRowSorter().toggleSortOrder(0);
+            table_1.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+            table_1.getColumnModel().getColumn(0).setPreferredWidth(20);
+            table_1.getColumnModel().getColumn(1).setPreferredWidth(100);
+            table_1.getColumnModel().getColumn(2).setPreferredWidth(100);
+            table_1.getColumnModel().getColumn(3).setPreferredWidth(100);
+            table_1.getColumnModel().getColumn(0).setHeaderValue("ID");
+            table_1.getColumnModel().getColumn(1).setHeaderValue("First Name");
+            table_1.getColumnModel().getColumn(2).setHeaderValue("Last Name");
+            table_1.getColumnModel().getColumn(3).setHeaderValue("Phone Number");
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -100,19 +116,19 @@ public class ContactForm {
         getConnection();
         table_load();
 
-        //Add new button
-        addNewButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                enterPanel.setVisible(true);
-                deleteButton.setVisible(false);
-                updateButton.setVisible(false);
-                txtFirstName.setText("");
-                txtLastName.setText("");
-                txtPhoneNumber.setText("");
-                txtFirstName.requestFocus();
-            }
-        });
+//        //Add new button
+//        addNewButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                enterPanel.setVisible(true);
+//                deleteButton.setVisible(false);
+//                updateButton.setVisible(false);
+//                txtFirstName.setText("");
+//                txtLastName.setText("");
+//                txtPhoneNumber.setText("");
+//                txtFirstName.requestFocus();
+//            }
+//        });
 
         //Save button
         saveButton.addActionListener(new ActionListener() {
@@ -335,10 +351,10 @@ public class ContactForm {
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
-        gbc.gridy = 9;
-        gbc.gridwidth = 16;
+        gbc.gridy = 8;
+        gbc.gridwidth = 9;
         gbc.gridheight = 2;
-        gbc.fill = GridBagConstraints.VERTICAL;
+        gbc.fill = GridBagConstraints.BOTH;
         gbc.ipadx = 40;
         Main.add(scrollPane1, gbc);
         table_1 = new JTable();
@@ -346,13 +362,13 @@ public class ContactForm {
         scrollPane1.setViewportView(table_1);
         enterPanel = new JPanel();
         enterPanel.setLayout(new GridLayoutManager(6, 2, new Insets(5, 5, 5, 5), -1, -1));
-        enterPanel.setMaximumSize(new Dimension(400, 2147483647));
-        enterPanel.setMinimumSize(new Dimension(400, 50));
-        enterPanel.setVisible(false);
+        enterPanel.setMaximumSize(new Dimension(259, 178));
+        enterPanel.setMinimumSize(new Dimension(259, 178));
+        enterPanel.setVisible(true);
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 2;
-        gbc.gridwidth = 15;
+        gbc.gridwidth = 9;
         gbc.fill = GridBagConstraints.BOTH;
         Main.add(enterPanel, gbc);
         enterPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
@@ -384,7 +400,7 @@ public class ContactForm {
         final JPanel spacer4 = new JPanel();
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
-        gbc.gridy = 10;
+        gbc.gridy = 9;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.ipadx = 80;
         Main.add(spacer4, gbc);
@@ -392,109 +408,103 @@ public class ContactForm {
         textField1.setPreferredSize(new Dimension(40, 25));
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
-        gbc.gridy = 7;
-        gbc.gridwidth = 12;
+        gbc.gridy = 6;
+        gbc.gridwidth = 5;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         Main.add(textField1, gbc);
-        saveButton = new JButton();
-        saveButton.setText("Save");
-        saveButton.setVisible(false);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 15;
-        gbc.gridy = 5;
-        Main.add(saveButton, gbc);
-        searchButton = new JButton();
-        searchButton.setText("Search");
-        gbc = new GridBagConstraints();
-        gbc.gridx = 15;
-        gbc.gridy = 7;
-        Main.add(searchButton, gbc);
         final JPanel spacer5 = new JPanel();
         gbc = new GridBagConstraints();
-        gbc.gridx = 8;
+        gbc.gridx = 9;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.VERTICAL;
         gbc.ipady = 30;
         Main.add(spacer5, gbc);
         final JPanel spacer6 = new JPanel();
         gbc = new GridBagConstraints();
-        gbc.gridx = 11;
-        gbc.gridy = 4;
+        gbc.gridx = 2;
+        gbc.gridy = 5;
         gbc.fill = GridBagConstraints.VERTICAL;
         Main.add(spacer6, gbc);
-        updateButton = new JButton();
-        updateButton.setEnabled(true);
-        updateButton.setText("Update");
-        updateButton.setVisible(false);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 13;
-        gbc.gridy = 5;
-        Main.add(updateButton, gbc);
-        deleteButton = new JButton();
-        deleteButton.setEnabled(true);
-        deleteButton.setText("Delete");
-        deleteButton.setVisible(false);
-        gbc = new GridBagConstraints();
-        gbc.gridx = 11;
-        gbc.gridy = 5;
-        Main.add(deleteButton, gbc);
         final JPanel spacer7 = new JPanel();
         gbc = new GridBagConstraints();
-        gbc.gridx = 13;
-        gbc.gridy = 3;
+        gbc.gridx = 2;
+        gbc.gridy = 7;
         gbc.fill = GridBagConstraints.VERTICAL;
         Main.add(spacer7, gbc);
-        final JPanel spacer8 = new JPanel();
-        gbc = new GridBagConstraints();
-        gbc.gridx = 2;
-        gbc.gridy = 6;
-        gbc.fill = GridBagConstraints.VERTICAL;
-        Main.add(spacer8, gbc);
-        final JPanel spacer9 = new JPanel();
-        gbc = new GridBagConstraints();
-        gbc.gridx = 2;
-        gbc.gridy = 8;
-        gbc.fill = GridBagConstraints.VERTICAL;
-        Main.add(spacer9, gbc);
         addNewButton = new JButton();
         addNewButton.setEnabled(true);
         addNewButton.setText("Add new");
         addNewButton.setVisible(true);
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
-        gbc.gridy = 5;
+        gbc.gridy = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         Main.add(addNewButton, gbc);
         clearAllButton = new JButton();
         clearAllButton.setText("Clear All");
-        clearAllButton.setVisible(false);
+        clearAllButton.setVisible(true);
         gbc = new GridBagConstraints();
         gbc.gridx = 4;
-        gbc.gridy = 5;
+        gbc.gridy = 4;
         Main.add(clearAllButton, gbc);
-        final JPanel spacer10 = new JPanel();
+        final JPanel spacer8 = new JPanel();
         gbc = new GridBagConstraints();
         gbc.gridx = 3;
-        gbc.gridy = 5;
+        gbc.gridy = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        Main.add(spacer10, gbc);
+        Main.add(spacer8, gbc);
+        deleteButton = new JButton();
+        deleteButton.setEnabled(true);
+        deleteButton.setText("Delete");
+        deleteButton.setVisible(true);
+        gbc = new GridBagConstraints();
+        gbc.gridx = 6;
+        gbc.gridy = 4;
+        Main.add(deleteButton, gbc);
         final JLabel label4 = new JLabel();
         Font label4Font = this.$$$getFont$$$(null, -1, 22, label4.getFont());
         if (label4Font != null) label4.setFont(label4Font);
         label4.setText("Contacts");
         gbc = new GridBagConstraints();
-        gbc.gridx = 4;
+        gbc.gridx = 6;
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.WEST;
         Main.add(label4, gbc);
+        updateButton = new JButton();
+        updateButton.setEnabled(true);
+        updateButton.setText("Update");
+        updateButton.setVisible(true);
+        gbc = new GridBagConstraints();
+        gbc.gridx = 8;
+        gbc.gridy = 4;
+        Main.add(updateButton, gbc);
+        saveButton = new JButton();
+        saveButton.setText("Save");
+        saveButton.setVisible(true);
+        gbc = new GridBagConstraints();
+        gbc.gridx = 10;
+        gbc.gridy = 4;
+        Main.add(saveButton, gbc);
+        searchButton = new JButton();
+        searchButton.setText("Search");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 8;
+        gbc.gridy = 6;
+        Main.add(searchButton, gbc);
         resetButton = new JButton();
         resetButton.setText("Reset");
         gbc = new GridBagConstraints();
-        gbc.gridx = 17;
-        gbc.gridy = 7;
+        gbc.gridx = 10;
+        gbc.gridy = 6;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         Main.add(resetButton, gbc);
+        final JPanel spacer9 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 2;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        Main.add(spacer9, gbc);
     }
 
     /**
