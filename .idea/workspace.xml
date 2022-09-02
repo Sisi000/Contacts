@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a2cf4317-b2ec-47b2-8fe9-beaa468dc456" name="Changes" comment="Applied MVC">
+    <list default="true" id="a2cf4317-b2ec-47b2-8fe9-beaa468dc456" name="Changes" comment="Changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ContactFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ContactFormController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/ContactForm.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ContactForm.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/ContactForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/ContactForm.java" afterDir="false" />
     </list>
@@ -155,7 +154,14 @@
       <option name="project" value="LOCAL" />
       <updated>1661901654755</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Changes">
+      <created>1662147307394</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1662147307394</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

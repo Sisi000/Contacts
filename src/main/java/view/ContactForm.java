@@ -269,6 +269,18 @@ public class ContactForm {
                 txtFirstName.setText(model.getValueAt(i, 1).toString());
                 txtLastName.setText(model.getValueAt(i, 2).toString());
                 txtPhoneNumber.setText(model.getValueAt(i, 3).toString());
+                txtFirstName.disable();
+                txtLastName.disable();
+                txtPhoneNumber.disable();
+                txtFirstName.setDisabledTextColor(Color.GRAY);
+                txtLastName.setDisabledTextColor(Color.GRAY);
+                txtPhoneNumber.setDisabledTextColor(Color.GRAY);
+                txtFirstName.setBackground(Color.decode("#F7F6F6"));
+                txtLastName.setBackground(Color.decode("#F7F6F6"));
+                    txtPhoneNumber.setBackground(Color.decode("#F7F6F6"));
+
+
+
             }
         });
 
@@ -345,7 +357,7 @@ public class ContactForm {
         final JScrollPane scrollPane1 = new JScrollPane();
         scrollPane1.setEnabled(true);
         scrollPane1.setMaximumSize(new Dimension(32767, 32767));
-        scrollPane1.setMinimumSize(new Dimension(200, 21));
+        scrollPane1.setMinimumSize(new Dimension(370, 328));
         scrollPane1.setPreferredSize(new Dimension(370, 328));
         scrollPane1.setVisible(true);
         GridBagConstraints gbc;
@@ -439,7 +451,6 @@ public class ContactForm {
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 4;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
         Main.add(addNewButton, gbc);
         clearAllButton = new JButton();
         clearAllButton.setText("Clear All");
@@ -448,12 +459,6 @@ public class ContactForm {
         gbc.gridx = 4;
         gbc.gridy = 4;
         Main.add(clearAllButton, gbc);
-        final JPanel spacer8 = new JPanel();
-        gbc = new GridBagConstraints();
-        gbc.gridx = 3;
-        gbc.gridy = 4;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        Main.add(spacer8, gbc);
         deleteButton = new JButton();
         deleteButton.setEnabled(true);
         deleteButton.setText("Delete");
@@ -485,6 +490,7 @@ public class ContactForm {
         gbc = new GridBagConstraints();
         gbc.gridx = 10;
         gbc.gridy = 4;
+        gbc.anchor = GridBagConstraints.EAST;
         Main.add(saveButton, gbc);
         searchButton = new JButton();
         searchButton.setText("Search");
@@ -499,12 +505,12 @@ public class ContactForm {
         gbc.gridy = 6;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         Main.add(resetButton, gbc);
-        final JPanel spacer9 = new JPanel();
+        final JPanel spacer8 = new JPanel();
         gbc = new GridBagConstraints();
         gbc.gridx = 2;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.VERTICAL;
-        Main.add(spacer9, gbc);
+        Main.add(spacer8, gbc);
     }
 
     /**
